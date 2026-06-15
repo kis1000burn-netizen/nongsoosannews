@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>농수산유통신문 | 데이터형 전문 언론</title>
+  <meta name="description" content="가격·수급·정책·현장을 연결하는 농수산 유통 데이터형 전문 언론" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" focusable="false">
+          <circle class="logo-ring" cx="32" cy="32" r="28" />
+          <path class="logo-leaf" d="M18 42 C19 27, 28 18, 43 15 C40 30, 31 39, 18 42 Z" />
+          <path class="logo-stem" d="M19 43 C27 35, 33 27, 42 17" />
+          <path class="logo-wave" d="M14 44 C22 36, 31 52, 40 42 C45 36, 51 37, 55 43" />
+          <path class="logo-fish" d="M35 33 C43 25, 53 28, 56 35 C50 39, 42 39, 35 33 Z" />
+          <circle class="logo-eye" cx="50" cy="33" r="1.8" />
+          <path class="logo-data" d="M21 23 L29 26 L36 20 L45 23" />
+        </svg>
+      </span>
+      <span>
+        <strong>농수산유통신문</strong>
+        <em>Data Market Journal</em>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="주요 메뉴">
+      <a href="#price-index">전국시세</a>
+      <a href="#founding-message">창간사</a>
+      <a href="#publisher-column">특별기고</a>
+      <a href="#briefing">브리핑</a>
+      <a href="#market">가격·수급</a>
+      <a href="#policy">정책</a>
+      <a href="#field">현장</a>
+      <a href="#newsroom">뉴스룸</a>
+      <a href="#reporter-drafts">기사초안</a>
+      <a href="#ad-board">광고</a>
+      <a href="#ai-collector">AI 자료수집</a>
+      <a href="#report">자료실</a>
+    </nav>
+    <div class="header-actions">
+      <button id="editor-login-button" class="admin-login-button" type="button">편집인 로그인</button>
+      <button class="tip-button">제보하기</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="price-index" class="price-index">
+      <div class="section-head price-head">
+        <div>
+          <span class="section-label">전국 농수산물 시세표</span>
+          <h1>오늘의 가격 지수</h1>
+          <p>전국 주요 권역의 농산물·수산물 대표 품목 가격 흐름을 한눈에 확인합니다.</p>
+        </div>
+        <div class="index-date">
+          <span>기준일</span>
+          <strong id="price-date">2026.06.16</strong>
+        </div>
+      </div>
+
+      <div class="price-dashboard">
+        <article class="index-summary-card">
+          <span class="panel-kicker">종합 시세 지수</span>
+          <strong id="national-index">108.6</strong>
+          <p id="national-index-copy">전주 대비 상승 품목 비중이 우세합니다.</p>
+          <div class="gauge"><span id="national-index-gauge"></span></div>
+        </article>
+
+        <article class="index-chart-card">
+          <div class="chart-title">
+            <span class="panel-kicker">권역별 체감 지수</span>
+            <small>100 = 평년 기준</small>
+          </div>
+          <div id="regional-chart" class="regional-chart" aria-label="권역별 농수산물 가격 지수 막대 도표"></div>
+        </article>
+
+        <article class="index-table-card">
+          <div class="chart-title">
+            <span class="panel-kicker">대표 품목 가격표</span>
+            <small>도매 기준 샘플</small>
+          </div>
+          <div class="price-table-wrap">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th>품목</th>
+                  <th>권역</th>
+                  <th>가격</th>
+                  <th>변동</th>
+                </tr>
+              </thead>
+              <tbody id="national-price-table"></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">산지에서 식탁까지</p>
+        <h1>농수산 유통의 흐름을<br />데이터로 읽어주는 전문 언론</h1>
+        <p class="hero-desc">가격, 수급, 정책, 현장 제보를 하나의 브리핑 화면으로 연결합니다.</p>
+        <div class="hero-actions">
+          <a href="#briefing" class="primary-action">오늘의 브리핑</a>
+          <a href="#market" class="secondary-action">가격 흐름 보기</a>
+        </div>
+      </div>
+
+      <div class="cmb-map" aria-label="농수산 유통 흐름 애니메이션">
+        <svg viewBox="0 0 680 420" role="img">
+          <defs>
+            <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#a8ff3e" />
+              <stop offset="50%" stop-color="#50e3ff" />
+              <stop offset="100%" stop-color="#ffd36e" />
+            </linearGradient>
+          </defs>
+          <path class="route route-1" d="M85 280 C180 120, 280 140, 350 220 S505 330, 595 145" />
+          <path class="route route-2" d="M95 305 C230 350, 350 320, 590 260" />
+          <g class="node node-farm" transform="translate(82 282)">
+            <circle r="28" /><text y="6">산지</text>
+          </g>
+          <g class="node node-hub" transform="translate(350 220)">
+            <circle r="34" /><text y="6">도매</text>
+          </g>
+          <g class="node node-market" transform="translate(596 145)">
+            <circle r="30" /><text y="6">외식</text>
+          </g>
+          <g class="node node-home" transform="translate(590 260)">
+            <circle r="30" /><text y="6">소비</text>
+          </g>
+          <circle class="packet packet-1" r="7" />
+          <circle class="packet packet-2" r="6" />
+        </svg>
+      </div>
+    </section>
+
+    <section id="founding-message" class="founding-message">
+      <div class="founding-head">
+        <span class="section-label">창간사</span>
+        <h2>산지에서 식탁까지, 농수산 유통의 흐름을 읽겠습니다</h2>
+        <p>농수산유통신문이 오늘 첫걸음을 내딛습니다.</p>
+      </div>
+
+      <article class="founding-article">
+        <img class="article-thumbnail hero-thumbnail" src="./assets/창간사이미지.png" alt="농수산유통신문 창간사 썸네일" />
+        <p>농산물과 수산물은 단순한 상품이 아닙니다. 한 해의 날씨, 산지의 땀, 바다의 변화, 물류의 흐름, 도매시장의 가격, 식자재 시장의 수요, 그리고 소비자의 식탁이 모두 연결된 살아 있는 산업입니다.</p>
+        <p>그러나 지금까지 농수산 유통의 정보는 여러 곳에 흩어져 있었습니다. 산지의 목소리와 도매시장의 움직임, 정부 정책과 기관 자료, 가격 데이터와 소비 현장의 변화가 각각 따로 존재했습니다. 현장에서는 매일 가격이 움직이고, 물량이 바뀌고, 정책이 발표되고, 소비 흐름이 달라지지만 그 흐름을 한눈에 읽기란 쉽지 않았습니다.</p>
+        <p>농수산유통신문은 바로 그 지점에서 출발합니다.</p>
+        <p>우리는 단순히 뉴스를 전달하는 데 그치지 않겠습니다. 가격이 왜 움직였는지, 수급 변화가 누구에게 어떤 영향을 주는지, 정책이 현장에 어떻게 닿는지, 산지와 시장과 소비자는 무엇을 준비해야 하는지를 함께 읽겠습니다.</p>
+
+        <div class="founding-principles">
+          <h3>농수산유통신문의 방향</h3>
+          <ol>
+            <li>
+              <strong>현장을 보겠습니다.</strong>
+              <span>농민, 어민, 산지유통인, 도매시장 관계자, 식자재 업체, 외식업계, 지역 유통 현장의 목소리를 기사 중심에 두겠습니다.</span>
+            </li>
+            <li>
+              <strong>데이터를 읽겠습니다.</strong>
+              <span>가격, 수급, 수출입, 소비 흐름, 정책 자료를 단순 숫자로 나열하지 않고 현장에 필요한 언어로 해석하겠습니다.</span>
+            </li>
+            <li>
+              <strong>정책과 시장을 연결하겠습니다.</strong>
+              <span>농림축산식품부, 해양수산부, 지자체, 공공기관, 협회와 조합의 자료를 현장 관점에서 풀어내고, 생산자와 유통업계가 실제로 활용할 수 있는 정보로 재구성하겠습니다.</span>
+            </li>
+            <li>
+              <strong>농수산 유통의 미래를 준비하겠습니다.</strong>
+              <span>기후 변화, 고령화, 물류비 상승, 온라인 도매시장, 스마트 유통, 수산식품 수출, 외식·급식 시장 변화는 더 이상 먼 이야기가 아닙니다. 농수산업의 경쟁력은 생산만이 아니라 유통을 어떻게 설계하느냐에 달려 있습니다.</span>
+            </li>
+          </ol>
+        </div>
+
+        <p>농수산유통신문은 생산자와 소비자 사이에 놓인 긴 유통의 길을 투명하게 비추는 신문이 되겠습니다. 산지의 작은 변화가 시장에 어떤 파장을 만드는지, 바다의 변화가 식탁에 어떤 영향을 주는지, 정책 하나가 현장의 비용과 수익에 어떤 결과를 가져오는지 꾸준히 추적하겠습니다.</p>
+
+        <blockquote>
+          <p>우리는 빠른 기사보다 필요한 기사를 쓰겠습니다.</p>
+          <p>자극적인 제목보다 정확한 해석을 선택하겠습니다.</p>
+          <p>일회성 보도보다 축적되는 정보를 만들겠습니다.</p>
+        </blockquote>
+
+        <p>농수산유통신문은 오늘부터 산지에서 식탁까지 이어지는 농수산 유통의 흐름을 읽고, 기록하고, 연결하겠습니다.</p>
+
+        <footer class="founding-signature">
+          <span>발행인 <strong>황규홍</strong></span>
+          <span>편집인 <strong>최인석</strong></span>
+        </footer>
+      </article>
+    </section>
+
+    <section id="publisher-column" class="founding-message publisher-column">
+      <div class="founding-head">
+        <span class="section-label">발행인 특별기고</span>
+        <h2>농수산유통신문이 가야 할 길: 데이터와 현장을 연결하는 전문 언론으로</h2>
+        <p>발행인 황규홍</p>
+      </div>
+
+      <article class="founding-article publisher-article">
+        <img class="article-thumbnail hero-thumbnail" src="./assets/특별기고.png" alt="발행인 특별기고 썸네일" />
+        <p>농수산 유통은 우리 사회의 가장 기본적인 생활 산업입니다. 매일 식탁에 오르는 쌀, 채소, 과일, 생선, 해조류, 가공식품은 모두 산지와 시장, 물류와 소비를 거쳐 도착합니다. 이 과정에는 수많은 사람이 있습니다. 생산자가 있고, 어업인이 있고, 산지유통인이 있고, 도매시장 관계자가 있고, 식자재 업체와 외식업체, 소비자가 있습니다.</p>
+        <p>그런데 이 중요한 산업의 정보는 아직도 충분히 연결되어 있지 않습니다.</p>
+        <p>산지에서는 물량과 출하 시기를 고민하고, 도매시장에서는 가격과 재고를 살피며, 식자재 업체는 납품 단가와 안정적인 공급을 걱정합니다. 소비자는 가격 상승을 체감하지만 그 원인이 산지 작황 때문인지, 물류비 때문인지, 수입 여건 때문인지, 정책 변화 때문인지 알기 어렵습니다.</p>
+        <p>농수산유통신문은 이 간극을 줄이고자 합니다.</p>
+
+        <div class="founding-principles column-principles">
+          <h3>앞으로 우리 신문이 중심에 둘 세 가지 방향</h3>
+          <ol>
+            <li>
+              <strong>농수산 유통의 흐름을 데이터로 보여드리겠습니다.</strong>
+              <span>가격은 결과입니다. 그 뒤에는 생산량, 기상, 저장 물량, 수입 물량, 도매시장 반입량, 소비 수요, 수출입 동향이 함께 움직입니다. 농수산유통신문은 가격을 단순히 올랐다, 내렸다고 보도하지 않겠습니다. 왜 움직였는지, 어떤 품목이 주목되는지, 어떤 업종이 영향을 받는지 분석하겠습니다.</span>
+            </li>
+            <li>
+              <strong>기관 자료를 현장 언어로 바꾸겠습니다.</strong>
+              <span>정부와 공공기관, 연구기관, 협회와 조합에서는 매년 많은 자료를 내놓습니다. 하지만 현장에서는 그 자료를 읽을 시간이 부족하고, 때로는 내용이 어렵습니다. 농수산유통신문은 정책자료, 수급 전망, 가격 정보, 수출입 통계, 연구보고서를 현장에서 활용할 수 있도록 쉽게 해설하겠습니다.</span>
+            </li>
+            <li>
+              <strong>생산자와 유통인, 소비자를 함께 보겠습니다.</strong>
+              <span>좋은 농수산 유통은 어느 한쪽만 이익을 보는 구조가 아닙니다. 생산자는 제값을 받아야 하고, 유통은 합리적인 비용으로 움직여야 하며, 소비자는 신뢰할 수 있는 가격과 품질을 만나야 합니다. 우리 신문은 이 균형을 바라보겠습니다.</span>
+            </li>
+          </ol>
+        </div>
+
+        <p>농수산업은 지금 큰 전환점에 서 있습니다.</p>
+        <p>기후 변화는 작황과 어획에 영향을 주고 있습니다. 인력 부족과 고령화는 산지의 구조를 바꾸고 있습니다. 물류비와 에너지 비용은 유통비용의 중요한 변수가 되고 있습니다. 온라인 도매시장과 디지털 거래는 기존 유통 구조를 바꾸고 있습니다. 수산식품 수출과 K-푸드 확산은 국내 농수산물의 새로운 가능성을 보여주고 있습니다.</p>
+        <p>이 변화 속에서 필요한 것은 단순한 정보의 양이 아니라 해석의 힘입니다.</p>
+        <p>농수산유통신문은 현장을 존중하는 언론, 데이터를 읽는 언론, 정책과 시장을 연결하는 언론이 되겠습니다. 지역의 작은 산지 이슈도 놓치지 않고, 국가적 수급 변화도 쉽게 풀어내겠습니다. 농민과 어민, 유통업계와 외식업계, 지자체와 공공기관, 소비자 모두가 함께 읽을 수 있는 전문 언론으로 성장하겠습니다.</p>
+
+        <blockquote>
+          <p>가격과 수급을 매일 살피겠습니다.</p>
+          <p>정책과 제도를 쉽게 설명하겠습니다.</p>
+          <p>현장의 목소리를 기사에 담겠습니다.</p>
+          <p>자료를 복사하지 않고 해석하겠습니다.</p>
+          <p>광고와 보도를 분명히 구분하겠습니다.</p>
+          <p>농수산 유통의 미래를 꾸준히 기록하겠습니다.</p>
+        </blockquote>
+
+        <p>농수산유통신문의 출발은 작을 수 있습니다. 그러나 우리가 바라보는 방향은 분명합니다. 산지에서 식탁까지 이어지는 긴 길 위에서, 필요한 정보를 가장 정확하고 쉽게 전하는 신문이 되겠습니다.</p>
+        <p>농수산 유통을 읽는 힘, 그 힘을 독자 여러분과 함께 만들어가겠습니다.</p>
+
+        <footer class="founding-signature">
+          <span>발행인 <strong>황규홍</strong></span>
+        </footer>
+      </article>
+    </section>
+
+    <section id="briefing" class="briefing-grid">
+      <article class="briefing-card main-brief">
+        <span class="section-label">오늘의 농수산 유통 브리핑</span>
+        <h2 id="brief-title">배추·무 가격 변동성 확대, 산지 출하량 확인 필요</h2>
+        <p id="brief-summary">금주 주요 채소류는 기상 변수와 산지 출하 조절 영향으로 품목별 등락이 갈리고 있습니다.</p>
+        <ul id="brief-points" class="point-list"></ul>
+      </article>
+
+      <article class="briefing-card pulse-card">
+        <span class="section-label">시장 온도</span>
+        <strong id="market-temp">주의</strong>
+        <p>전주 대비 변동 폭이 큰 품목이 늘었습니다.</p>
+        <div class="gauge"><span id="gauge-fill"></span></div>
+      </article>
+
+      <article class="briefing-card source-card">
+        <span class="section-label">자료 해설 원칙</span>
+        <p>공공자료·기관지·현장 제보를 그대로 복제하지 않고, 출처 표기 후 가격·수급·정책 영향으로 재해석합니다.</p>
+      </article>
+    </section>
+
+    <section id="market" class="market-section">
+      <div class="section-head">
+        <span class="section-label">가격·수급 대시보드</span>
+        <h2>오늘 움직인 품목</h2>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-filter="all">전체</button>
+        <button class="tab" data-filter="agri">농산물</button>
+        <button class="tab" data-filter="fish">수산물</button>
+      </div>
+      <div id="commodity-grid" class="commodity-grid"></div>
+    </section>
+
+    <section class="content-columns">
+      <article id="policy" class="news-panel">
+        <div class="section-head compact">
+          <span class="section-label">정책·제도</span>
+          <h2>기관자료 3분 요약</h2>
+        </div>
+        <div id="policy-list" class="article-list"></div>
+      </article>
+
+      <article id="field" class="news-panel">
+        <div class="section-head compact">
+          <span class="section-label">산지·도매시장</span>
+          <h2>현장 체크포인트</h2>
+        </div>
+        <div id="field-list" class="article-list"></div>
+      </article>
+    </section>
+
+    <section id="newsroom" class="newsroom-section">
+      <div class="section-head">
+        <div>
+          <span class="section-label">뉴스 전용룸</span>
+          <h2>취재·편집·게시 흐름을 한 곳에서 관리</h2>
+        </div>
+        <a class="secondary-action" href="#ai-collector">AI 자료수집 연결</a>
+      </div>
+
+      <div class="newsroom-layout">
+        <article class="newsroom-lead">
+          <span class="panel-kicker">오늘의 편집 데스크</span>
+          <h3>가격 급등 품목, 정책자료, 현장 제보를 기사 상태별로 배치합니다.</h3>
+          <p>초안, 검수, 예약 발행, 긴급 속보를 구분해 뉴스 콘텐츠를 빠르게 넣을 수 있는 전용 영역입니다.</p>
+          <div class="desk-status">
+            <span>초안 6건</span>
+            <span>검수 3건</span>
+            <span>예약 2건</span>
+          </div>
+        </article>
+
+        <div class="newsroom-slots" aria-label="뉴스 콘텐츠 슬롯">
+          <article class="news-slot urgent">
+            <small>긴급</small>
+            <strong>전국 도매시장 가격 변동 속보</strong>
+            <p>시세표와 연결되는 속보형 기사 배치 슬롯입니다.</p>
+          </article>
+          <article class="news-slot">
+            <small>분석</small>
+            <strong>품목별 수급 분석 기사</strong>
+            <p>AI 수집 결과와 기자 해설을 연결하는 분석 기사 슬롯입니다.</p>
+          </article>
+          <article class="news-slot">
+            <small>현장</small>
+            <strong>산지·수산 현장 리포트</strong>
+            <p>지역별 제보와 사진 자료를 기사로 전환하는 슬롯입니다.</p>
+          </article>
+          <article class="news-slot">
+            <small>정책</small>
+            <strong>기관자료 요약 게시</strong>
+            <p>공고, 보도자료, 지원사업을 독자용 정보로 재구성합니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="reporter-drafts" class="reporter-drafts-section">
+      <div class="section-head">
+        <div>
+          <span class="section-label">뉴스룸 기사용 초안 모음</span>
+          <h2>신동호 기자 초안 아카이브</h2>
+        </div>
+        <button class="secondary-action admin-open-button" type="button">편집인 로그인 후 기사화</button>
+      </div>
+
+      <div class="draft-grid">
+        <article class="draft-card">
+          <img class="article-thumbnail" src="./assets/동향.png" alt="2026년 농수산 유통 동향 기사 썸네일" />
+          <span>동향</span>
+          <h3>2026년 농수산 유통, 가격보다 ‘흐름’을 읽어야 한다</h3>
+          <p>2026년 농수산 유통시장은 가격 변동 자체보다 그 배경을 읽는 능력이 더 중요해지고 있다. 기후 변화, 생산비 상승, 물류비 부담, 온라인 거래 확대, 수출입 환경 변화가 동시에 작용하면서 품목별 가격 움직임이 더욱 복합적으로 나타나고 있기 때문이다.</p>
+          <p>농산물 시장에서는 주요 채소와 과일의 작황, 저장 물량, 산지 출하 시기, 도매시장 반입량이 가격 흐름을 좌우하는 핵심 변수로 작용한다. 특히 소비자는 가격 상승만 체감하지만, 현장에서는 인건비, 포장비, 운송비, 선별비 등 유통 전 과정의 비용 부담이 함께 누적되고 있다.</p>
+          <p>수산물 시장도 마찬가지다. 어획량, 양식 생산량, 수입 물량, 수출 수요, 소비 패턴 변화가 동시에 움직인다. 특히 김을 중심으로 한 K-수산식품 수출 확대는 국내 수산업에 새로운 기회를 만들고 있지만, 내수 가격과 원물 확보 경쟁에도 영향을 줄 수 있다.</p>
+          <p>농수산유통신문은 앞으로 품목별 가격·수급 흐름을 정기적으로 분석하고, 공공기관과 연구기관의 자료를 현장 언어로 풀어낼 계획이다.</p>
+        </article>
+
+        <article class="draft-card">
+          <img class="article-thumbnail" src="./assets/전망.png" alt="농산물 유통 전망 기사 썸네일" />
+          <span>전망</span>
+          <h3>농산물 유통, 온라인 도매시장과 산지 대응력이 핵심 변수로</h3>
+          <p>농산물 유통 구조가 빠르게 바뀌고 있다. 기존 도매시장 중심의 거래 질서는 유지되지만, 온라인 도매시장과 디지털 거래, 산지 조직화, 물류 효율화가 새로운 경쟁 요소로 떠오르고 있다.</p>
+          <p>농산물 가격은 생산량만으로 결정되지 않는다. 산지 출하 조절, 저장 물량, 도매시장 반입량, 소비지 수요, 기상 상황, 수입 물량이 함께 작용한다. 특히 기상 이변이 잦아지면서 특정 품목의 단기 가격 급등락 가능성은 더 커지고 있다.</p>
+          <p>정부가 추진하는 유통구조 개선과 온라인 도매시장 확대는 생산자에게 새로운 기회가 될 수 있다. 다만 디지털 거래가 실제 산지의 소득 개선으로 이어지려면 가격 정보의 투명성, 정산 안정성, 물류 체계, 산지 교육이 함께 뒷받침되어야 한다.</p>
+        </article>
+
+        <article class="draft-card">
+          <img class="article-thumbnail" src="./assets/수산.png" alt="K-씨푸드 수출 기사 썸네일" />
+          <span>수산</span>
+          <h3>K-씨푸드 수출 확대, 수산 유통의 새 성장축 되나</h3>
+          <p>국내 수산식품 산업에서 수출은 점점 더 중요한 성장축으로 자리 잡고 있다. 특히 김은 K-푸드 확산과 글로벌 소비 증가를 바탕으로 대표 수출 품목으로 부상했다.</p>
+          <p>수산식품 수출 확대는 국내 업계에 긍정적인 기회다. 수출 품목이 다양해지고 시장이 넓어지면 생산자와 가공업체, 유통업체의 판로가 확대될 수 있다. 또한 고부가가치 제품 개발, 위생·품질 관리, 브랜드화가 함께 진행되면 국내 수산업의 체질 개선에도 도움이 된다.</p>
+          <p>하지만 수출 수요가 늘어날수록 원물 확보 경쟁이 심화될 수 있고, 내수 시장 가격에도 영향을 줄 수 있다. 농수산유통신문은 K-씨푸드 수출 흐름을 지속적으로 추적하고, 품목별 수출 동향과 국내 시장 영향을 함께 분석할 계획이다.</p>
+        </article>
+
+        <article class="draft-card">
+          <img class="article-thumbnail" src="./assets/정책해설.png" alt="농수산 정책해설 기사 썸네일" />
+          <span>정책해설</span>
+          <h3>농수산 정책, 현장에서는 ‘지원사업’보다 ‘활용 가능성’이 중요하다</h3>
+          <p>농림축산식품부와 해양수산부, 지자체, 공공기관은 매년 다양한 농수산 정책과 지원사업을 발표한다. 그러나 현장에서는 정책의 양보다 실제 활용 가능성이 더 중요하다.</p>
+          <p>정책은 발표되는 순간보다 현장에 적용되는 과정이 중요하다. 어떤 품목과 지역이 대상인지, 신청 조건은 무엇인지, 지원 규모는 어느 정도인지, 실제 부담해야 할 비용은 있는지, 사업 이후 어떤 의무가 따르는지까지 쉽게 정리되어야 한다.</p>
+          <p>농수산유통신문은 단순히 보도자료를 옮기는 것이 아니라, 현장에서 확인해야 할 핵심 조건, 대상자, 기대 효과, 주의할 점을 함께 설명하는 방식으로 정책 보도 방식을 바꾸고자 한다.</p>
+        </article>
+
+        <article class="draft-card wide">
+          <img class="article-thumbnail" src="./assets/시장체크.png" alt="식자재 외식업계 시장체크 기사 썸네일" />
+          <span>시장체크</span>
+          <h3>식자재·외식업계가 주목해야 할 농수산 가격 변수</h3>
+          <p>농수산물 가격 변동은 식자재 유통과 외식업계에 직접적인 영향을 준다. 채소, 과일, 수산물, 축산물 가격이 움직이면 도시락, 급식, 프랜차이즈, 일반 음식점의 원가 구조도 함께 달라진다.</p>
+          <p>외식업계는 단기 가격 급등에 취약하다. 메뉴 가격은 쉽게 바꾸기 어렵지만 원재료 가격은 빠르게 움직이기 때문이다. 식자재 업체와 외식업체는 주요 품목의 가격 흐름을 사전에 파악하고, 대체 품목과 계약 물량, 저장 가능성, 납품 단가 조정 기준을 미리 준비해야 한다.</p>
+          <p>앞으로 식자재·외식업계는 단순 구매가 아니라 정보 기반 구매 전략이 필요하다. 농수산유통신문은 식자재·외식업계가 참고할 수 있는 품목별 가격 변수와 주간 수급 체크포인트를 정기적으로 제공할 예정이다.</p>
+          <footer>신동호 기자</footer>
+        </article>
+      </div>
+    </section>
+
+    <section id="article-engine" class="article-engine-section admin-only" aria-hidden="true">
+      <div class="section-head">
+        <div>
+          <span class="section-label">AI 기사화 엔진</span>
+          <h2>편집인 관리자 전용 기사 작성 도구</h2>
+          <p class="admin-note">외부 공개 화면에서는 비활성화되어 있으며, 편집인 로그인 후에만 표시됩니다.</p>
+        </div>
+        <div class="engine-tools">
+          <button id="article-convert-button" class="primary-action" type="button">기사화 실행</button>
+          <button id="editor-logout-button" class="secondary-action" type="button">관리자 로그아웃</button>
+        </div>
+      </div>
+
+      <div class="article-engine-layout">
+        <article class="article-engine-panel">
+          <span class="panel-kicker">원문 입력</span>
+          <label class="upload-box" for="article-file-input">
+            <input id="article-file-input" type="file" accept=".txt,.md,.csv,.json" />
+            <strong>파일 업로드</strong>
+            <span>txt, md, csv, json 형식의 기사 원문을 읽습니다.</span>
+          </label>
+          <textarea id="article-source-text" class="article-source-text" placeholder="기사화할 원문 전문을 붙여넣거나 파일을 업로드하세요. 예: 보도자료, 현장 제보, 기관 공고, 가격 분석 자료"></textarea>
+          <div class="engine-tools">
+            <button id="article-sample-button" class="secondary-action" type="button">샘플 원문 넣기</button>
+            <button id="article-clear-button" class="secondary-action" type="button">초기화</button>
+          </div>
+        </article>
+
+        <article class="article-engine-panel result-panel">
+          <span class="panel-kicker">변환 결과</span>
+          <div class="article-status" id="article-engine-status">원문 대기 중</div>
+          <h3 id="generated-title">원문을 입력하면 제목이 생성됩니다.</h3>
+          <p id="generated-lead">AI 기사화 엔진이 리드문, 본문 요약, 핵심 포인트, 태그를 자동 구성합니다.</p>
+          <div class="generated-body" id="generated-body"></div>
+          <ul id="generated-points" class="generated-points"></ul>
+          <div id="generated-tags" class="generated-tags"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="ad-board" class="ad-board-section">
+      <div class="section-head">
+        <div>
+          <span class="section-label">광고게시판</span>
+          <h2>배너·협찬·공지 광고를 배치할 수 있는 영역</h2>
+        </div>
+        <a class="primary-action" href="tel:010-5945-5925">광고 문의</a>
+      </div>
+
+      <div class="ad-grid" aria-label="광고 게시 슬롯">
+        <article class="ad-slot premium">
+          <span>메인 프리미엄</span>
+          <strong>상단 대형 배너</strong>
+          <p>전국 시세표와 주요 기사 사이에 노출할 핵심 광고 자리입니다.</p>
+        </article>
+        <article class="ad-slot">
+          <span>지역 광고</span>
+          <strong>산지·도매시장 홍보</strong>
+          <p>지역 조합, 유통업체, 산지 캠페인용 광고 슬롯입니다.</p>
+        </article>
+        <article class="ad-slot">
+          <span>브랜드 협찬</span>
+          <strong>농수산 브랜드 캠페인</strong>
+          <p>식자재, 수산물, 농산물 브랜드 협찬 콘텐츠를 배치합니다.</p>
+        </article>
+        <article class="ad-slot notice">
+          <span>공지형</span>
+          <strong>지원사업·행사 안내</strong>
+          <p>기관 공고, 박람회, 세미나 안내를 광고형 게시판으로 운영합니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="ai-collector" class="ai-collector">
+      <div class="section-head">
+        <div>
+          <span class="section-label">AI 기반 자료수집</span>
+          <h2>출처를 모아 기사 단서로 정리</h2>
+        </div>
+        <button id="refresh-ai" class="secondary-action" type="button">수집 시뮬레이션 실행</button>
+      </div>
+
+      <div class="ai-layout">
+        <article class="ai-panel">
+          <span class="panel-kicker">수집 대상</span>
+          <div id="source-pipeline" class="source-pipeline"></div>
+        </article>
+
+        <article class="ai-panel highlight-panel">
+          <span class="panel-kicker">AI 편집 큐</span>
+          <h3 id="ai-headline">오늘 확인할 자료를 분류하는 중</h3>
+          <p id="ai-summary">공공자료, 기관 공지, 현장 제보를 가격·수급·정책 영향 기준으로 자동 분류합니다.</p>
+          <dl class="ai-metrics">
+            <div>
+              <dt>우선순위</dt>
+              <dd id="ai-priority">-</dd>
+            </div>
+            <div>
+              <dt>확인 필요</dt>
+              <dd id="ai-checks">-</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="ai-panel">
+          <span class="panel-kicker">기사화 후보</span>
+          <div id="ai-article-queue" class="article-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="report" class="report-band">
+      <div>
+        <span class="section-label">창간 핵심 기능</span>
+        <h2>데이터형 언론 CMS로 확장</h2>
+        <p>기사, 품목, 기관자료, 제보, 정책공고를 하나의 데이터 구조로 관리하는 방향으로 설계합니다.</p>
+      </div>
+      <pre><code>Article + Commodity + Source + Briefing</code></pre>
+    </section>
+  </main>
+
+  <div id="editor-login-modal" class="admin-modal" aria-hidden="true">
+    <form id="editor-login-form" class="admin-login-panel">
+      <button id="editor-login-close" class="admin-close" type="button" aria-label="편집인 로그인 닫기">×</button>
+      <span class="panel-kicker">Editor Access</span>
+      <h2>편집인 관리자 로그인</h2>
+      <p>AI 기사 작성 도구는 공개 방문자에게 노출되지 않습니다. 편집인 인증 후 관리자 전용 영역에서 사용할 수 있습니다.</p>
+      <label for="editor-password">관리자 비밀번호</label>
+      <input id="editor-password" type="password" autocomplete="current-password" placeholder="비밀번호 입력" />
+      <button class="primary-action" type="submit">로그인</button>
+      <div id="editor-login-status" class="admin-login-status" role="status"></div>
+    </form>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <strong>농수산유통신문</strong>
+      <span>가격·수급·정책·현장을 연결하는 데이터형 전문 언론</span>
+    </div>
+
+    <div class="footer-info" aria-label="매체 운영 정보">
+      <dl>
+        <div>
+          <dt>발행인</dt>
+          <dd>황규홍</dd>
+        </div>
+        <div>
+          <dt>편집인</dt>
+          <dd>최인석</dd>
+        </div>
+        <div>
+          <dt>운영주체</dt>
+          <dd>(주)누리온홀딩스</dd>
+        </div>
+      </dl>
+      <a class="footer-tip" href="tel:010-5945-5925" aria-label="제보 전화 010-5945-5925">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.6 3.8 9.2 3c.7-.2 1.4.2 1.6.9l.7 2.8c.2.6-.1 1.2-.6 1.5l-1.4.9c.9 1.9 2.4 3.4 4.3 4.3l.9-1.4c.3-.5.9-.8 1.5-.6l2.8.7c.7.2 1.1.9.9 1.6l-.8 2.6c-.2.6-.8 1-1.4 1C10.6 17.3 4.7 11.4 4.7 4.2c0-.6.4-1.2 1-1.4Z" />
+        </svg>
+        <span>제보</span>
+        <strong>010-5945-5925</strong>
+      </a>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
