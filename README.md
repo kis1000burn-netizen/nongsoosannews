@@ -5,6 +5,7 @@
 ## 구성
 
 - `index.html`: 메인 페이지
+- `newsroom.html`: 기사 전문을 모아 읽는 뉴스룸 페이지
 - `styles.css`: 전체 스타일
 - `app.js`: 시세표, AI 자료수집 시뮬레이션, 편집인 전용 기사화 도구
 - `assets/`: 기사 썸네일 이미지

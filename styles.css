@@ -179,6 +179,44 @@ main { padding: 0 5vw 60px; }
 .price-table .up { color: var(--red); }
 .price-table .down { color: var(--blue); }
 .price-table .flat { color: var(--amber); }
+.national-markets-section { margin-top: 80px; }
+.market-map-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 18px; align-items: stretch; }
+.market-map-card {
+  position: relative; min-height: 620px; border: 1px solid var(--line); border-radius: 34px;
+  padding: 22px; background: linear-gradient(150deg, rgba(255,255,255,.12), rgba(255,255,255,.045));
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.market-map-card img {
+  width: 100%; height: 100%; min-height: 560px; object-fit: contain;
+  filter: drop-shadow(0 22px 45px rgba(0,0,0,.22));
+}
+.map-pin {
+  position: absolute; display: inline-flex; padding: 8px 11px; border-radius: 999px;
+  background: rgba(200,255,92,.92); color: #0e1f14; font-size: 13px; font-weight: 900;
+  box-shadow: 0 10px 26px rgba(0,0,0,.28);
+}
+.map-pin::after {
+  content: ""; position: absolute; left: 50%; bottom: -7px; width: 10px; height: 10px;
+  background: inherit; transform: translateX(-50%) rotate(45deg);
+}
+.pin-seoul { left: 44%; top: 21%; }
+.pin-gangwon { left: 59%; top: 17%; }
+.pin-chungcheong { left: 44%; top: 38%; }
+.pin-honam { left: 34%; top: 58%; }
+.pin-yeongnam { left: 58%; top: 57%; }
+.pin-jeju { left: 31%; top: 85%; }
+.market-region-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.market-region-card {
+  border: 1px solid var(--line); border-radius: 26px; padding: 22px;
+  background: linear-gradient(150deg, rgba(255,255,255,.11), rgba(255,255,255,.045));
+}
+.market-region-card.hot { background: linear-gradient(135deg, rgba(200,255,92,.17), rgba(101,234,255,.09)); }
+.market-region-card span {
+  display: inline-flex; margin-bottom: 10px; color: var(--blue); font-size: 13px; font-weight: 900;
+}
+.market-region-card strong { display: block; margin-bottom: 10px; color: var(--text); font-size: 21px; }
+.market-region-card p { margin: 0 0 16px; color: var(--muted); line-height: 1.65; }
+.market-region-card em { color: var(--green); font-style: normal; font-weight: 900; }
 .hero {
   min-height: 650px; display: grid; grid-template-columns: 1fr 1.08fr;
   gap: 42px; align-items: center;
@@ -365,6 +403,42 @@ h1 { margin: 14px 0; font-size: clamp(42px, 6vw, 84px); line-height: 1.02; lette
   margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line);
   color: var(--green); font-weight: 900;
 }
+.newsroom-teaser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.newsroom-teaser {
+  display: grid; gap: 12px; border: 1px solid var(--line); border-radius: 26px;
+  padding: 16px; background: linear-gradient(150deg, rgba(255,255,255,.11), rgba(255,255,255,.045));
+}
+.newsroom-teaser img {
+  width: 100%; height: 180px; object-fit: cover; border-radius: 18px;
+}
+.newsroom-teaser span { color: var(--blue); font-size: 13px; font-weight: 900; }
+.newsroom-teaser strong { color: var(--text); font-size: 20px; line-height: 1.35; }
+.newsroom-page { padding-top: 72px; }
+.newsroom-hero {
+  margin-bottom: 34px; padding: clamp(28px, 5vw, 58px); border: 1px solid var(--line);
+  border-radius: 36px; background:
+    radial-gradient(circle at 88% 12%, rgba(200,255,92,.16), transparent 34%),
+    linear-gradient(150deg, rgba(255,255,255,.12), rgba(255,255,255,.045));
+  box-shadow: var(--shadow);
+}
+.newsroom-hero h1 {
+  margin: 12px 0; font-size: clamp(44px, 7vw, 88px);
+  line-height: 1; letter-spacing: -.07em;
+}
+.newsroom-hero p { color: var(--muted); font-size: 19px; line-height: 1.7; }
+.newsroom-article-list { display: grid; gap: 28px; }
+.newsroom-article {
+  border: 1px solid var(--line); border-radius: 34px; padding: clamp(24px, 4vw, 42px);
+  background: linear-gradient(150deg, rgba(255,255,255,.11), rgba(255,255,255,.045));
+  box-shadow: 0 18px 60px rgba(0,0,0,.2);
+}
+.newsroom-article h2 {
+  margin: 12px 0 16px; font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.12; letter-spacing: -.055em;
+}
+.newsroom-article p { color: var(--text); font-size: 18px; line-height: 1.9; }
+.newsroom-article .article-meta { color: var(--green); font-weight: 900; }
+.newsroom-article .article-thumbnail { height: clamp(240px, 34vw, 390px); }
 .ad-grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr 1fr; gap: 16px; }
 .ad-slot {
   min-height: 190px; position: relative; overflow: hidden;
@@ -498,14 +572,16 @@ h1 { margin: 14px 0; font-size: clamp(42px, 6vw, 84px); line-height: 1.02; lette
 .report-band { display: flex; align-items: center; justify-content: space-between; gap: 30px; background: linear-gradient(120deg, rgba(200,255,92,.16), rgba(101,234,255,.11)); }
 .report-band pre { margin: 0; padding: 20px; border-radius: 18px; background: rgba(0,0,0,.28); color: var(--green); }
 .site-footer {
-  display: grid; grid-template-columns: 1fr 1.7fr; gap: 24px; align-items: stretch;
-  padding: 34px 5vw; border-top: 1px solid var(--line);
-  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+  display: grid; grid-template-columns: 1fr 1.7fr; gap: 28px; align-items: center;
+  margin: 34px 5vw; padding: 30px; border: 1px solid var(--line); border-radius: 32px;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(200,255,92,.13), transparent 32%),
+    linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.045));
+  box-shadow: 0 18px 60px rgba(0,0,0,.22);
   color: var(--muted);
 }
 .footer-brand, .footer-info {
-  border: 1px solid var(--line); border-radius: 26px; padding: 24px;
-  background: rgba(255,255,255,.07);
+  min-width: 0;
 }
 .footer-brand strong {
   display: block; color: var(--text); font-size: 24px; margin-bottom: 10px;
@@ -531,9 +607,11 @@ h1 { margin: 14px 0; font-size: clamp(42px, 6vw, 84px); line-height: 1.02; lette
 .footer-tip strong { color: inherit; }
 @media (max-width: 980px) {
   .main-nav { display:none; }
-  .hero, .briefing-grid, .content-columns, .ai-layout, .price-dashboard, .newsroom-layout, .ad-grid, .article-engine-layout, .draft-grid { grid-template-columns: 1fr; }
+  .hero, .briefing-grid, .content-columns, .ai-layout, .price-dashboard, .newsroom-layout, .ad-grid, .article-engine-layout, .draft-grid, .market-map-layout, .market-region-grid, .newsroom-teaser-grid { grid-template-columns: 1fr; }
   .briefing-grid { margin-top: 20px; }
   .commodity-grid, .newsroom-slots { grid-template-columns: repeat(2, 1fr); }
+  .market-map-card { min-height: auto; }
+  .market-map-card img { min-height: 420px; }
   .report-band { flex-direction: column; align-items: flex-start; }
   .site-footer, .footer-info, .footer-info dl { grid-template-columns: 1fr; }
   .footer-info { flex-direction: column; align-items: stretch; }
@@ -553,7 +631,9 @@ h1 { margin: 14px 0; font-size: clamp(42px, 6vw, 84px); line-height: 1.02; lette
   .header-actions { gap: 6px; }
   .admin-login-button { padding: 10px 12px; font-size: 13px; }
   .hero { min-height: auto; padding: 56px 0 0; }
+  .market-map-card img { min-height: 340px; }
+  .map-pin { font-size: 11px; padding: 6px 8px; }
   .commodity-grid, .newsroom-slots { grid-template-columns: 1fr; }
-  .site-footer { padding: 28px 18px; }
+  .site-footer { margin: 28px 18px; padding: 24px; }
   .footer-tip { width: 100%; justify-content: center; }
 }

@@ -34,8 +34,7 @@
       <a href="#market">가격·수급</a>
       <a href="#policy">정책</a>
       <a href="#field">현장</a>
-      <a href="#newsroom">뉴스룸</a>
-      <a href="#reporter-drafts">기사초안</a>
+      <a href="./newsroom.html">뉴스룸</a>
       <a href="#ad-board">광고</a>
       <a href="#ai-collector">AI 자료수집</a>
       <a href="#report">자료실</a>
@@ -95,6 +94,67 @@
             </table>
           </div>
         </article>
+      </div>
+    </section>
+
+    <section id="national-markets" class="national-markets-section">
+      <div class="section-head">
+        <div>
+          <span class="section-label">전국 농산물 시장 지도</span>
+          <h2>주요 산지·도매시장 흐름을 한눈에</h2>
+        </div>
+        <a class="secondary-action" href="#market">품목별 가격 보기</a>
+      </div>
+
+      <div class="market-map-layout">
+        <article class="market-map-card">
+          <img src="./assets/남한지도.webp" alt="전국 주요 농산물 시장 현황 지도" />
+          <span class="map-pin pin-seoul">수도권</span>
+          <span class="map-pin pin-gangwon">강원</span>
+          <span class="map-pin pin-chungcheong">충청</span>
+          <span class="map-pin pin-honam">호남</span>
+          <span class="map-pin pin-yeongnam">영남</span>
+          <span class="map-pin pin-jeju">제주</span>
+        </article>
+
+        <div class="market-region-grid" aria-label="전국 주요 농산물 시장 현황">
+          <article class="market-region-card hot">
+            <span>수도권</span>
+            <strong>가락·구리 도매권</strong>
+            <p>반입량 감소 품목은 배추·무 중심으로 확인하고, 외식 수요 회복 여부를 함께 점검합니다.</p>
+            <em>지수 112.4</em>
+          </article>
+          <article class="market-region-card">
+            <span>강원</span>
+            <strong>고랭지 채소 산지</strong>
+            <p>기상 변수와 산지 출하 지연 여부가 수도권 도매가격에 직접 반영됩니다.</p>
+            <em>지수 104.8</em>
+          </article>
+          <article class="market-region-card">
+            <span>충청</span>
+            <strong>중부권 물류 거점</strong>
+            <p>도매시장 반입량과 저장 물량 흐름이 주간 가격 안정성을 좌우합니다.</p>
+            <em>지수 107.2</em>
+          </article>
+          <article class="market-region-card">
+            <span>호남</span>
+            <strong>양파·마늘·시설채소권</strong>
+            <p>저장 물량 출회와 산지 가격 변화가 식자재 납품 단가에 영향을 줍니다.</p>
+            <em>지수 103.9</em>
+          </article>
+          <article class="market-region-card hot">
+            <span>영남</span>
+            <strong>부산·대구 소비권</strong>
+            <p>도시 소비지와 산지 물류가 맞물려 채소·과일류 체감 가격이 강하게 움직입니다.</p>
+            <em>지수 110.5</em>
+          </article>
+          <article class="market-region-card hot">
+            <span>제주</span>
+            <strong>월동채소·수산 연계권</strong>
+            <p>월동무, 감귤, 갈치 등 계절 품목의 출하 흐름을 함께 확인해야 합니다.</p>
+            <em>지수 115.1</em>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -302,43 +362,43 @@
       <div class="section-head">
         <div>
           <span class="section-label">뉴스 전용룸</span>
-          <h2>취재·편집·게시 흐름을 한 곳에서 관리</h2>
+          <h2>기사는 별도 뉴스룸에서 모아 읽습니다</h2>
         </div>
-        <a class="secondary-action" href="#ai-collector">AI 자료수집 연결</a>
+        <a class="secondary-action" href="./newsroom.html">뉴스룸 전체보기</a>
       </div>
 
       <div class="newsroom-layout">
         <article class="newsroom-lead">
-          <span class="panel-kicker">오늘의 편집 데스크</span>
-          <h3>가격 급등 품목, 정책자료, 현장 제보를 기사 상태별로 배치합니다.</h3>
-          <p>초안, 검수, 예약 발행, 긴급 속보를 구분해 뉴스 콘텐츠를 빠르게 넣을 수 있는 전용 영역입니다.</p>
+          <span class="panel-kicker">뉴스룸 안내</span>
+          <h3>홈 화면은 시세와 시장 흐름 중심으로 간결하게 유지합니다.</h3>
+          <p>동향, 전망, 수산, 정책해설, 시장체크 기사 전문은 별도 뉴스룸에 모아두었습니다. 독자는 뉴스룸에서 주제별로 기사를 골라 읽을 수 있습니다.</p>
           <div class="desk-status">
-            <span>초안 6건</span>
-            <span>검수 3건</span>
-            <span>예약 2건</span>
+            <span>주요 기사 5건</span>
+            <span>창간 콘텐츠 2건</span>
+            <span>시장 지도 연동</span>
           </div>
         </article>
 
         <div class="newsroom-slots" aria-label="뉴스 콘텐츠 슬롯">
           <article class="news-slot urgent">
-            <small>긴급</small>
-            <strong>전국 도매시장 가격 변동 속보</strong>
-            <p>시세표와 연결되는 속보형 기사 배치 슬롯입니다.</p>
+            <small>동향</small>
+            <strong>2026년 농수산 유통, 가격보다 흐름</strong>
+            <p>기후, 물류, 수출입 환경 변화가 가격에 미치는 흐름을 분석합니다.</p>
           </article>
           <article class="news-slot">
-            <small>분석</small>
-            <strong>품목별 수급 분석 기사</strong>
-            <p>AI 수집 결과와 기자 해설을 연결하는 분석 기사 슬롯입니다.</p>
+            <small>전망</small>
+            <strong>온라인 도매시장과 산지 대응력</strong>
+            <p>농산물 유통 구조 변화와 산지 조직화 이슈를 정리합니다.</p>
           </article>
           <article class="news-slot">
-            <small>현장</small>
-            <strong>산지·수산 현장 리포트</strong>
-            <p>지역별 제보와 사진 자료를 기사로 전환하는 슬롯입니다.</p>
+            <small>수산</small>
+            <strong>K-씨푸드 수출 확대 흐름</strong>
+            <p>수산식품 수출이 내수 가격과 원물 확보에 미치는 영향을 봅니다.</p>
           </article>
           <article class="news-slot">
-            <small>정책</small>
-            <strong>기관자료 요약 게시</strong>
-            <p>공고, 보도자료, 지원사업을 독자용 정보로 재구성합니다.</p>
+            <small>정책·시장체크</small>
+            <strong>지원사업과 외식업계 가격 변수</strong>
+            <p>정책 활용 가능성과 식자재 원가 변동 요인을 함께 점검합니다.</p>
           </article>
         </div>
       </div>
@@ -347,59 +407,28 @@
     <section id="reporter-drafts" class="reporter-drafts-section">
       <div class="section-head">
         <div>
-          <span class="section-label">뉴스룸 기사용 초안 모음</span>
-          <h2>신동호 기자 초안 아카이브</h2>
+          <span class="section-label">뉴스룸 바로가기</span>
+          <h2>복잡한 기사 목록은 뉴스룸에서 읽습니다</h2>
         </div>
-        <button class="secondary-action admin-open-button" type="button">편집인 로그인 후 기사화</button>
+        <a class="primary-action" href="./newsroom.html">뉴스룸 열기</a>
       </div>
 
-      <div class="draft-grid">
-        <article class="draft-card">
-          <img class="article-thumbnail" src="./assets/동향.png" alt="2026년 농수산 유통 동향 기사 썸네일" />
+      <div class="newsroom-teaser-grid">
+        <a class="newsroom-teaser" href="./newsroom.html#trend">
+          <img src="./assets/동향.png" alt="농수산 유통 동향 기사 썸네일" />
           <span>동향</span>
-          <h3>2026년 농수산 유통, 가격보다 ‘흐름’을 읽어야 한다</h3>
-          <p>2026년 농수산 유통시장은 가격 변동 자체보다 그 배경을 읽는 능력이 더 중요해지고 있다. 기후 변화, 생산비 상승, 물류비 부담, 온라인 거래 확대, 수출입 환경 변화가 동시에 작용하면서 품목별 가격 움직임이 더욱 복합적으로 나타나고 있기 때문이다.</p>
-          <p>농산물 시장에서는 주요 채소와 과일의 작황, 저장 물량, 산지 출하 시기, 도매시장 반입량이 가격 흐름을 좌우하는 핵심 변수로 작용한다. 특히 소비자는 가격 상승만 체감하지만, 현장에서는 인건비, 포장비, 운송비, 선별비 등 유통 전 과정의 비용 부담이 함께 누적되고 있다.</p>
-          <p>수산물 시장도 마찬가지다. 어획량, 양식 생산량, 수입 물량, 수출 수요, 소비 패턴 변화가 동시에 움직인다. 특히 김을 중심으로 한 K-수산식품 수출 확대는 국내 수산업에 새로운 기회를 만들고 있지만, 내수 가격과 원물 확보 경쟁에도 영향을 줄 수 있다.</p>
-          <p>농수산유통신문은 앞으로 품목별 가격·수급 흐름을 정기적으로 분석하고, 공공기관과 연구기관의 자료를 현장 언어로 풀어낼 계획이다.</p>
-        </article>
-
-        <article class="draft-card">
-          <img class="article-thumbnail" src="./assets/전망.png" alt="농산물 유통 전망 기사 썸네일" />
+          <strong>가격보다 흐름을 읽어야 한다</strong>
+        </a>
+        <a class="newsroom-teaser" href="./newsroom.html#forecast">
+          <img src="./assets/전망.png" alt="농산물 유통 전망 기사 썸네일" />
           <span>전망</span>
-          <h3>농산물 유통, 온라인 도매시장과 산지 대응력이 핵심 변수로</h3>
-          <p>농산물 유통 구조가 빠르게 바뀌고 있다. 기존 도매시장 중심의 거래 질서는 유지되지만, 온라인 도매시장과 디지털 거래, 산지 조직화, 물류 효율화가 새로운 경쟁 요소로 떠오르고 있다.</p>
-          <p>농산물 가격은 생산량만으로 결정되지 않는다. 산지 출하 조절, 저장 물량, 도매시장 반입량, 소비지 수요, 기상 상황, 수입 물량이 함께 작용한다. 특히 기상 이변이 잦아지면서 특정 품목의 단기 가격 급등락 가능성은 더 커지고 있다.</p>
-          <p>정부가 추진하는 유통구조 개선과 온라인 도매시장 확대는 생산자에게 새로운 기회가 될 수 있다. 다만 디지털 거래가 실제 산지의 소득 개선으로 이어지려면 가격 정보의 투명성, 정산 안정성, 물류 체계, 산지 교육이 함께 뒷받침되어야 한다.</p>
-        </article>
-
-        <article class="draft-card">
-          <img class="article-thumbnail" src="./assets/수산.png" alt="K-씨푸드 수출 기사 썸네일" />
+          <strong>온라인 도매시장과 산지 대응력</strong>
+        </a>
+        <a class="newsroom-teaser" href="./newsroom.html#seafood">
+          <img src="./assets/수산.png" alt="K-씨푸드 수출 기사 썸네일" />
           <span>수산</span>
-          <h3>K-씨푸드 수출 확대, 수산 유통의 새 성장축 되나</h3>
-          <p>국내 수산식품 산업에서 수출은 점점 더 중요한 성장축으로 자리 잡고 있다. 특히 김은 K-푸드 확산과 글로벌 소비 증가를 바탕으로 대표 수출 품목으로 부상했다.</p>
-          <p>수산식품 수출 확대는 국내 업계에 긍정적인 기회다. 수출 품목이 다양해지고 시장이 넓어지면 생산자와 가공업체, 유통업체의 판로가 확대될 수 있다. 또한 고부가가치 제품 개발, 위생·품질 관리, 브랜드화가 함께 진행되면 국내 수산업의 체질 개선에도 도움이 된다.</p>
-          <p>하지만 수출 수요가 늘어날수록 원물 확보 경쟁이 심화될 수 있고, 내수 시장 가격에도 영향을 줄 수 있다. 농수산유통신문은 K-씨푸드 수출 흐름을 지속적으로 추적하고, 품목별 수출 동향과 국내 시장 영향을 함께 분석할 계획이다.</p>
-        </article>
-
-        <article class="draft-card">
-          <img class="article-thumbnail" src="./assets/정책해설.png" alt="농수산 정책해설 기사 썸네일" />
-          <span>정책해설</span>
-          <h3>농수산 정책, 현장에서는 ‘지원사업’보다 ‘활용 가능성’이 중요하다</h3>
-          <p>농림축산식품부와 해양수산부, 지자체, 공공기관은 매년 다양한 농수산 정책과 지원사업을 발표한다. 그러나 현장에서는 정책의 양보다 실제 활용 가능성이 더 중요하다.</p>
-          <p>정책은 발표되는 순간보다 현장에 적용되는 과정이 중요하다. 어떤 품목과 지역이 대상인지, 신청 조건은 무엇인지, 지원 규모는 어느 정도인지, 실제 부담해야 할 비용은 있는지, 사업 이후 어떤 의무가 따르는지까지 쉽게 정리되어야 한다.</p>
-          <p>농수산유통신문은 단순히 보도자료를 옮기는 것이 아니라, 현장에서 확인해야 할 핵심 조건, 대상자, 기대 효과, 주의할 점을 함께 설명하는 방식으로 정책 보도 방식을 바꾸고자 한다.</p>
-        </article>
-
-        <article class="draft-card wide">
-          <img class="article-thumbnail" src="./assets/시장체크.png" alt="식자재 외식업계 시장체크 기사 썸네일" />
-          <span>시장체크</span>
-          <h3>식자재·외식업계가 주목해야 할 농수산 가격 변수</h3>
-          <p>농수산물 가격 변동은 식자재 유통과 외식업계에 직접적인 영향을 준다. 채소, 과일, 수산물, 축산물 가격이 움직이면 도시락, 급식, 프랜차이즈, 일반 음식점의 원가 구조도 함께 달라진다.</p>
-          <p>외식업계는 단기 가격 급등에 취약하다. 메뉴 가격은 쉽게 바꾸기 어렵지만 원재료 가격은 빠르게 움직이기 때문이다. 식자재 업체와 외식업체는 주요 품목의 가격 흐름을 사전에 파악하고, 대체 품목과 계약 물량, 저장 가능성, 납품 단가 조정 기준을 미리 준비해야 한다.</p>
-          <p>앞으로 식자재·외식업계는 단순 구매가 아니라 정보 기반 구매 전략이 필요하다. 농수산유통신문은 식자재·외식업계가 참고할 수 있는 품목별 가격 변수와 주간 수급 체크포인트를 정기적으로 제공할 예정이다.</p>
-          <footer>신동호 기자</footer>
-        </article>
+          <strong>K-씨푸드 수출 확대</strong>
+        </a>
       </div>
     </section>
 
