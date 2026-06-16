@@ -109,51 +109,77 @@
       <div class="market-map-layout">
         <article class="market-map-card">
           <img src="./assets/남한지도.webp" alt="전국 주요 농산물 시장 현황 지도" />
-          <span class="map-pin pin-seoul">수도권</span>
-          <span class="map-pin pin-gangwon">강원</span>
-          <span class="map-pin pin-chungcheong">충청</span>
-          <span class="map-pin pin-honam">호남</span>
-          <span class="map-pin pin-yeongnam">영남</span>
-          <span class="map-pin pin-jeju">제주</span>
+          <button class="map-pin pin-seoul active" type="button" data-region="seoul">수도권</button>
+          <button class="map-pin pin-gangwon" type="button" data-region="gangwon">강원</button>
+          <button class="map-pin pin-chungcheong" type="button" data-region="chungcheong">충청</button>
+          <button class="map-pin pin-honam" type="button" data-region="honam">호남</button>
+          <button class="map-pin pin-yeongnam" type="button" data-region="yeongnam">영남</button>
+          <button class="map-pin pin-jeju" type="button" data-region="jeju">제주</button>
         </article>
 
-        <div class="market-region-grid" aria-label="전국 주요 농산물 시장 현황">
-          <article class="market-region-card hot">
+        <div class="market-region-wrap">
+          <div class="market-region-detail" aria-live="polite">
+            <span class="panel-kicker">선택 지역 농수산 정보</span>
+            <h3 id="region-detail-title">수도권 가락·구리 도매권</h3>
+            <p id="region-detail-summary">반입량 감소 품목은 배추·무 중심으로 확인하고, 외식 수요 회복 여부를 함께 점검합니다.</p>
+            <dl class="region-detail-list">
+              <div>
+                <dt>대표 품목</dt>
+                <dd id="region-detail-items">배추, 무, 양파, 고등어</dd>
+              </div>
+              <div>
+                <dt>주요 시장</dt>
+                <dd id="region-detail-market">가락시장, 구리시장</dd>
+              </div>
+              <div>
+                <dt>체감 지수</dt>
+                <dd id="region-detail-index">112.4</dd>
+              </div>
+            </dl>
+            <ul id="region-detail-points" class="region-detail-points">
+              <li>도매시장 반입량과 외식 수요 회복 여부를 함께 확인합니다.</li>
+              <li>배추·무 가격 급등락은 수도권 소비지 가격에 빠르게 반영됩니다.</li>
+            </ul>
+          </div>
+
+          <div class="market-region-grid" aria-label="전국 주요 농산물 시장 현황">
+          <button class="market-region-card hot active" type="button" data-region="seoul">
             <span>수도권</span>
             <strong>가락·구리 도매권</strong>
             <p>반입량 감소 품목은 배추·무 중심으로 확인하고, 외식 수요 회복 여부를 함께 점검합니다.</p>
             <em>지수 112.4</em>
-          </article>
-          <article class="market-region-card">
+          </button>
+          <button class="market-region-card" type="button" data-region="gangwon">
             <span>강원</span>
             <strong>고랭지 채소 산지</strong>
             <p>기상 변수와 산지 출하 지연 여부가 수도권 도매가격에 직접 반영됩니다.</p>
             <em>지수 104.8</em>
-          </article>
-          <article class="market-region-card">
+          </button>
+          <button class="market-region-card" type="button" data-region="chungcheong">
             <span>충청</span>
             <strong>중부권 물류 거점</strong>
             <p>도매시장 반입량과 저장 물량 흐름이 주간 가격 안정성을 좌우합니다.</p>
             <em>지수 107.2</em>
-          </article>
-          <article class="market-region-card">
+          </button>
+          <button class="market-region-card" type="button" data-region="honam">
             <span>호남</span>
             <strong>양파·마늘·시설채소권</strong>
             <p>저장 물량 출회와 산지 가격 변화가 식자재 납품 단가에 영향을 줍니다.</p>
             <em>지수 103.9</em>
-          </article>
-          <article class="market-region-card hot">
+          </button>
+          <button class="market-region-card hot" type="button" data-region="yeongnam">
             <span>영남</span>
             <strong>부산·대구 소비권</strong>
             <p>도시 소비지와 산지 물류가 맞물려 채소·과일류 체감 가격이 강하게 움직입니다.</p>
             <em>지수 110.5</em>
-          </article>
-          <article class="market-region-card hot">
+          </button>
+          <button class="market-region-card hot" type="button" data-region="jeju">
             <span>제주</span>
             <strong>월동채소·수산 연계권</strong>
             <p>월동무, 감귤, 갈치 등 계절 품목의 출하 흐름을 함께 확인해야 합니다.</p>
             <em>지수 115.1</em>
-          </article>
+          </button>
+          </div>
         </div>
       </div>
     </section>

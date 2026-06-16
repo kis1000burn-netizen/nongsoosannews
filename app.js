@@ -31,6 +31,75 @@ const nationalPriceIndex = {
   ]
 };
 
+const regionalMarketInfo = {
+  seoul: {
+    title: '수도권 가락·구리 도매권',
+    summary: '반입량 감소 품목은 배추·무 중심으로 확인하고, 외식 수요 회복 여부를 함께 점검합니다.',
+    items: '배추, 무, 양파, 고등어',
+    market: '가락시장, 구리시장',
+    index: '112.4',
+    points: [
+      '도매시장 반입량과 외식 수요 회복 여부를 함께 확인합니다.',
+      '배추·무 가격 급등락은 수도권 소비지 가격에 빠르게 반영됩니다.'
+    ]
+  },
+  gangwon: {
+    title: '강원 고랭지 채소 산지',
+    summary: '고랭지 배추, 감자, 무 출하 흐름이 수도권과 중부권 가격에 직접 연결됩니다.',
+    items: '배추, 감자, 무, 당근',
+    market: '강릉·춘천 산지유통, 수도권 도매 연계',
+    index: '104.8',
+    points: [
+      '일교차와 강우량 변화가 출하 지연과 품질 편차를 만들 수 있습니다.',
+      '고랭지 채소 반입량은 여름철 도매가격 안정성의 핵심 변수입니다.'
+    ]
+  },
+  chungcheong: {
+    title: '충청 중부권 물류 거점',
+    summary: '중부권 물류와 저장 물량 흐름이 전국 도매시장 가격 안정성을 좌우합니다.',
+    items: '마늘, 양파, 사과, 시설채소',
+    market: '대전 오정·노은시장, 청주 도매권',
+    index: '107.2',
+    points: [
+      '저장 물량 출회 시점과 도매시장 반입량 변화를 함께 봐야 합니다.',
+      '중부권 물류비 변동은 식자재 납품 단가에 빠르게 반영됩니다.'
+    ]
+  },
+  honam: {
+    title: '호남 양파·마늘·시설채소권',
+    summary: '양파, 마늘, 시설채소의 저장·출하 흐름이 식자재 시장에 영향을 줍니다.',
+    items: '양파, 마늘, 파프리카, 김',
+    market: '광주 각화시장, 전주·목포 산지권',
+    index: '103.9',
+    points: [
+      '저장 물량 출회가 늘면 단기 가격 안정 요인이 될 수 있습니다.',
+      '김 등 수산 가공품 수출 흐름도 지역 유통에 함께 영향을 줍니다.'
+    ]
+  },
+  yeongnam: {
+    title: '영남 부산·대구 소비권',
+    summary: '도시 소비지와 산지 물류가 맞물려 채소·과일류 체감 가격이 강하게 움직입니다.',
+    items: '딸기, 사과, 고추, 고등어',
+    market: '부산 엄궁·반여시장, 대구 도매권',
+    index: '110.5',
+    points: [
+      '부산권 수산 유통과 대구권 농산물 소비 흐름을 함께 확인해야 합니다.',
+      '외식 수요 회복 시 채소류와 수산물 체감 가격이 동시에 움직일 수 있습니다.'
+    ]
+  },
+  jeju: {
+    title: '제주 월동채소·수산 연계권',
+    summary: '월동무, 감귤, 갈치 등 계절 품목의 출하와 반입 흐름을 함께 확인해야 합니다.',
+    items: '월동무, 감귤, 당근, 갈치',
+    market: '제주 산지유통센터, 제주 수산 위판권',
+    index: '115.1',
+    points: [
+      '해상 물류와 기상 여건이 출하 시점과 소비지 가격에 직접 영향을 줍니다.',
+      '월동채소와 갈치 가격은 계절 수요와 관광 소비 흐름도 함께 봐야 합니다.'
+    ]
+  }
+};
+
 const commodities = [
   { name: '배추', type: 'agri', market: '도매', price: '18,400원', change: '+8.2%', direction: 'up', note: '출하량 변동' },
   { name: '무', type: 'agri', market: '도매', price: '13,900원', change: '+5.1%', direction: 'up', note: '기상 영향' },
@@ -95,6 +164,13 @@ const nationalIndexCopy = document.querySelector('#national-index-copy');
 const nationalIndexGauge = document.querySelector('#national-index-gauge');
 const regionalChart = document.querySelector('#regional-chart');
 const nationalPriceTable = document.querySelector('#national-price-table');
+const marketRegionButtons = document.querySelectorAll('[data-region]');
+const regionDetailTitle = document.querySelector('#region-detail-title');
+const regionDetailSummary = document.querySelector('#region-detail-summary');
+const regionDetailItems = document.querySelector('#region-detail-items');
+const regionDetailMarket = document.querySelector('#region-detail-market');
+const regionDetailIndex = document.querySelector('#region-detail-index');
+const regionDetailPoints = document.querySelector('#region-detail-points');
 const sourcePipeline = document.querySelector('#source-pipeline');
 const aiHeadline = document.querySelector('#ai-headline');
 const aiSummary = document.querySelector('#ai-summary');
@@ -153,6 +229,22 @@ function renderNationalPriceIndex() {
       <td class="${item.direction}">${item.change}</td>
     </tr>
   `).join('');
+}
+
+function renderRegionalMarketInfo(regionKey) {
+  const info = regionalMarketInfo[regionKey];
+  if (!info) return;
+
+  regionDetailTitle.textContent = info.title;
+  regionDetailSummary.textContent = info.summary;
+  regionDetailItems.textContent = info.items;
+  regionDetailMarket.textContent = info.market;
+  regionDetailIndex.textContent = info.index;
+  regionDetailPoints.innerHTML = info.points.map(point => `<li>${escapeHtml(point)}</li>`).join('');
+
+  marketRegionButtons.forEach(button => {
+    button.classList.toggle('active', button.dataset.region === regionKey);
+  });
 }
 
 function renderBriefing() {
@@ -351,6 +443,12 @@ document.querySelectorAll('.tab').forEach(button => {
   });
 });
 
+marketRegionButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    renderRegionalMarketInfo(button.dataset.region);
+  });
+});
+
 refreshAi.addEventListener('click', () => {
   const selectedIndex = Math.floor(Math.random() * aiCandidates.length);
   const activeSourceIndex = Math.floor(Math.random() * aiSources.length);
@@ -415,6 +513,7 @@ articleClearButton.addEventListener('click', () => {
 });
 
 renderNationalPriceIndex();
+renderRegionalMarketInfo('seoul');
 renderBriefing();
 renderCommodities();
 renderArticleList(policyList, policies);
