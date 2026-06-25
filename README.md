@@ -42,6 +42,8 @@ Netlify 대시보드 → Site configuration → Environment variables:
 
 등록 후 **재배포**하면 홈 화면에 실시간 시세가 반영됩니다.
 
+키 발급 전에도 KAMIS 공개 테스트 키로 최근 조사일 시세가 자동 반영됩니다. 승인 후 위 환경 변수를 등록하면 본인 키로 전환됩니다.
+
 ### 3. 로컬 테스트
 
 ```bash

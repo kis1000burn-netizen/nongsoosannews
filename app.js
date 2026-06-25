@@ -168,6 +168,7 @@ const commodityGrid = document.querySelector('#commodity-grid');
 const policyList = document.querySelector('#policy-list');
 const fieldList = document.querySelector('#field-list');
 const priceDate = document.querySelector('#price-date');
+const priceDateLabel = document.querySelector('#price-date-label');
 const nationalIndex = document.querySelector('#national-index');
 const nationalIndexCopy = document.querySelector('#national-index-copy');
 const nationalIndexGauge = document.querySelector('#national-index-gauge');
@@ -219,6 +220,9 @@ const articleSampleText = `강원 고랭지 배추 산지에서는 최근 잦은
 유통업계는 김치 제조업체, 급식업체, 식자재 납품업체의 발주 시점이 가격 변동을 키울 수 있어 도매가격과 산지 출하량을 동시에 점검해야 한다.`;
 
 function renderNationalPriceIndex() {
+  if (priceDateLabel) {
+    priceDateLabel.textContent = nationalPriceIndex.dateLabel || '기준일';
+  }
   priceDate.textContent = nationalPriceIndex.date;
   nationalIndex.textContent = nationalPriceIndex.index.toFixed(1);
   nationalIndexCopy.textContent = nationalPriceIndex.copy;
@@ -343,14 +347,20 @@ async function loadLiveMarketData() {
 
     if (priceSource) {
       const modeLabel = data.cached ? '캐시' : '실시간';
-      priceSource.textContent = `출처: aT 농산물유통정보(KAMIS) · ${modeLabel} 반영`;
+      const dayLabel = data.nationalPriceIndex?.isSurveyToday ? '당일' : '최근 조사일';
+      const credentialLabel = data.usingDemoCredentials
+        ? ' · 발급 키 연동 대기'
+        : '';
+      priceSource.textContent = `출처: aT KAMIS ${dayLabel} 도매 시세 · ${modeLabel} 반영${credentialLabel}`;
     }
     if (priceTableNote) {
-      priceTableNote.textContent = '도매 기준 KAMIS';
+      priceTableNote.textContent = data.nationalPriceIndex?.isSurveyToday
+        ? '당일 도매 시세'
+        : '최근 조사일 도매 시세';
     }
   } catch (error) {
     if (priceSource) {
-      priceSource.textContent = '샘플 시세 표시 중 · Netlify 환경 변수(KAMIS_CERT_KEY, KAMIS_CERT_ID) 설정 후 재배포 필요';
+      priceSource.textContent = 'KAMIS 시세 연결 중 · 잠시 후 자동으로 다시 시도합니다';
     }
   }
 }
@@ -608,6 +618,7 @@ renderArticleList(fieldList, fields);
 renderAiSources();
 renderAiQueue();
 loadLiveMarketData();
+setInterval(loadLiveMarketData, 30 * 60 * 1000);
 
 if (sessionStorage.getItem('editor-authenticated') === 'true') {
   articleEngineSection.classList.add('is-unlocked');

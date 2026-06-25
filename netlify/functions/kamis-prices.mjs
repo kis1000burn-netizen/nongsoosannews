@@ -23,7 +23,21 @@ const REGIONS = [
 const REGION_TRACKERS = ['배추/', '무/', '양파/'];
 
 let cache = { payload: null, expiresAt: 0 };
-const CACHE_MS = 6 * 60 * 60 * 1000;
+const CACHE_MS = 30 * 60 * 1000;
+
+function getKstToday() {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date());
+}
+
+function normalizeSurveyDay(value) {
+  if (!value) return null;
+  return String(value).slice(0, 10);
+}
+
+function isSurveyToday(surveyDay) {
+  const normalized = normalizeSurveyDay(surveyDay);
+  return Boolean(normalized && normalized === getKstToday());
+}
 
 function isSuccess(code) {
   return code === '000' || code === '0' || code === 0;
@@ -72,10 +86,11 @@ function itemLabel(item) {
 }
 
 function formatDate(value) {
-  if (!value || value === '당일') {
-    return new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+  const normalized = normalizeSurveyDay(value);
+  if (!normalized) {
+    return getKstToday().replace(/-/g, '.');
   }
-  return String(value).replace(/-/g, '.');
+  return normalized.replace(/-/g, '.');
 }
 
 function noteFromDirection(direction) {
@@ -85,12 +100,9 @@ function noteFromDirection(direction) {
 }
 
 async function fetchKamis(action, extraParams = {}) {
-  const certKey = process.env.KAMIS_CERT_KEY;
-  const certId = process.env.KAMIS_CERT_ID;
-
-  if (!certKey || !certId) {
-    throw new Error('KAMIS_CERT_KEY 또는 KAMIS_CERT_ID 환경 변수가 설정되지 않았습니다.');
-  }
+  const certKey = process.env.KAMIS_CERT_KEY || 'test';
+  const certId = process.env.KAMIS_CERT_ID || 'test';
+  const usingDemoCredentials = !process.env.KAMIS_CERT_KEY || !process.env.KAMIS_CERT_ID;
 
   const url = new URL(KAMIS_BASE);
   url.searchParams.set('action', action);
@@ -110,7 +122,8 @@ async function fetchKamis(action, extraParams = {}) {
     throw new Error(`KAMIS API HTTP ${response.status}`);
   }
 
-  return response.json();
+  const payload = await response.json();
+  return { payload, usingDemoCredentials };
 }
 
 function matchesWatch(item, watch) {
@@ -172,27 +185,31 @@ function buildRegionalIndex(items) {
   return Math.round((100 + average) * 10) / 10;
 }
 
-function buildSummaryCopy(items) {
-  const up = items.filter(item => item.direction === 'up').length;
-  const down = items.filter(item => item.direction === 'down').length;
+function buildSummaryCopy(commodities, surveyDay) {
+  const up = commodities.filter(item => item.direction === 'up').length;
+  const down = commodities.filter(item => item.direction === 'down').length;
+  const dayText = isSurveyToday(surveyDay)
+    ? '당일 조사 기준'
+    : `최근 조사일(${formatDate(surveyDay)}) 기준`;
 
   if (up > down) {
-    return `aT KAMIS 기준, 전일 대비 상승 품목(${up}개)이 우세합니다.`;
+    return `aT KAMIS ${dayText}, 전일 대비 상승 품목(${up}개)이 우세합니다.`;
   }
   if (down > up) {
-    return `aT KAMIS 기준, 전일 대비 하락 품목(${down}개)이 우세합니다.`;
+    return `aT KAMIS ${dayText}, 전일 대비 하락 품목(${down}개)이 우세합니다.`;
   }
-  return 'aT KAMIS 기준, 주요 품목 가격이 전일 대비 혼조세를 보이고 있습니다.';
+  return `aT KAMIS ${dayText}, 주요 품목 가격이 전일 대비 혼조세를 보이고 있습니다.`;
 }
 
-function buildBriefing(commodities) {
+function buildBriefing(commodities, surveyDay) {
   const movers = [...commodities]
     .filter(item => item.direction !== 'flat')
     .sort((a, b) => Math.abs(parseNumber(b.change)) - Math.abs(parseNumber(a.change)));
 
   const top = movers.slice(0, 2).map(item => item.name);
+  const dayText = isSurveyToday(surveyDay) ? '당일' : formatDate(surveyDay);
   const title = top.length
-    ? `${top.join('·')} 가격 변동 주목, KAMIS 실시간 시세 반영`
+    ? `${top.join('·')} ${dayText} 시세 변동 주목`
     : '주요 농수산물 가격 보합권, 수급 흐름 점검 필요';
 
   const upCount = commodities.filter(item => item.direction === 'up').length;
@@ -201,7 +218,7 @@ function buildBriefing(commodities) {
 
   return {
     title,
-    summary: `aT KAMIS 최근 조사일 기준으로 주요 품목 ${commodities.length}개의 도매 시세를 홈 화면에 반영했습니다.`,
+    summary: `aT KAMIS ${dayText} 조사 시세를 기준으로 주요 품목 ${commodities.length}개의 도매 가격을 홈 화면에 반영했습니다.`,
     points: [
       `상승 ${upCount}개 · 하락 ${downCount}개 · 보합 ${commodities.length - upCount - downCount}개`,
       movers[0] ? `${movers[0].name} ${movers[0].change} (${movers[0].price})` : '대표 품목 변동폭 확인 중',
@@ -212,7 +229,7 @@ function buildBriefing(commodities) {
 }
 
 async function buildMarketPayload() {
-  const salesPayload = await fetchKamis('dailySalesList');
+  const { payload: salesPayload, usingDemoCredentials } = await fetchKamis('dailySalesList');
   const salesCode = salesPayload?.error_code ?? salesPayload?.result_code;
 
   if (!isSuccess(salesCode)) {
@@ -227,7 +244,10 @@ async function buildMarketPayload() {
   WATCHLIST.forEach(watch => {
     const item = pickWholesaleItem(salesItems, watch);
     if (!item) return;
-    if (!referenceDay && item.lastest_day) referenceDay = item.lastest_day;
+    const surveyDay = normalizeSurveyDay(item.lastest_day);
+    if (surveyDay && (!referenceDay || surveyDay > referenceDay)) {
+      referenceDay = surveyDay;
+    }
     commodities.push(buildCommodity(item, watch));
     tableItems.push(buildTableItem(item, watch));
   });
@@ -239,7 +259,7 @@ async function buildMarketPayload() {
   const regionResults = await Promise.all(
     REGIONS.map(async region => {
       try {
-        const payload = await fetchKamis('dailyCountyList', { p_countycode: region.code });
+        const { payload } = await fetchKamis('dailyCountyList', { p_countycode: region.code });
         const code = payload?.error_code ?? payload?.result_code;
         if (!isSuccess(code)) return { name: region.name, index: 100, key: region.key };
 
@@ -256,8 +276,8 @@ async function buildMarketPayload() {
   ) / 10;
 
   const referenceDate = formatDate(referenceDay);
-
-  const briefing = buildBriefing(commodities);
+  const surveyToday = isSurveyToday(referenceDay);
+  const briefing = buildBriefing(commodities, referenceDay);
   const regionalIndexes = Object.fromEntries(
     regionResults.map(region => [region.key, region.index.toFixed(1)])
   );
@@ -265,11 +285,15 @@ async function buildMarketPayload() {
   return {
     ok: true,
     source: 'kamis',
+    usingDemoCredentials,
     updatedAt: new Date().toISOString(),
     nationalPriceIndex: {
       date: referenceDate,
+      dateLabel: surveyToday ? '당일 시세' : '최근 조사일',
+      surveyDate: referenceDay,
+      isSurveyToday: surveyToday,
       index: nationalIndex,
-      copy: buildSummaryCopy(commodities),
+      copy: buildSummaryCopy(commodities, referenceDay),
       regions: regionResults.map(({ name, index }) => ({ name, index })),
       items: tableItems.slice(0, 6)
     },
@@ -283,7 +307,7 @@ export const handler = async () => {
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'public, max-age=3600'
+    'Cache-Control': 'public, max-age=300'
   };
 
   try {
