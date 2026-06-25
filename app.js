@@ -1,4 +1,4 @@
-const briefing = {
+const fallbackBriefing = {
   title: '배추·무 가격 변동성 확대, 산지 출하량 확인 필요',
   summary: '금주 주요 채소류는 기상 변수와 산지 출하 조절 영향으로 품목별 등락이 갈리고 있습니다.',
   points: [
@@ -9,10 +9,10 @@ const briefing = {
   temperature: 72
 };
 
-const nationalPriceIndex = {
+const fallbackNationalPriceIndex = {
   date: '2026.06.16',
   index: 108.6,
-  copy: '전국 평균 기준, 채소류와 일부 수산물의 상승 압력이 이어지고 있습니다.',
+  copy: '전주 대비 상승 품목 비중이 우세합니다.',
   regions: [
     { name: '수도권', index: 112.4 },
     { name: '강원', index: 104.8 },
@@ -29,6 +29,13 @@ const nationalPriceIndex = {
     { name: '갈치', region: '제주', price: '12,300원', change: '-3.2%', direction: 'down' },
     { name: '김', region: '전남', price: '강세', change: '보합권', direction: 'flat' }
   ]
+};
+
+let briefing = { ...fallbackBriefing, points: [...fallbackBriefing.points] };
+let nationalPriceIndex = {
+  ...fallbackNationalPriceIndex,
+  regions: fallbackNationalPriceIndex.regions.map(region => ({ ...region })),
+  items: fallbackNationalPriceIndex.items.map(item => ({ ...item }))
 };
 
 const regionalMarketInfo = {
@@ -100,7 +107,7 @@ const regionalMarketInfo = {
   }
 };
 
-const commodities = [
+const fallbackCommodities = [
   { name: '배추', type: 'agri', market: '도매', price: '18,400원', change: '+8.2%', direction: 'up', note: '출하량 변동' },
   { name: '무', type: 'agri', market: '도매', price: '13,900원', change: '+5.1%', direction: 'up', note: '기상 영향' },
   { name: '양파', type: 'agri', market: '소매', price: '2,650원', change: '-2.4%', direction: 'down', note: '저장물량 출회' },
@@ -110,6 +117,8 @@ const commodities = [
   { name: '마늘', type: 'agri', market: '산지', price: '6,200원', change: '-1.8%', direction: 'down', note: '재고 점검' },
   { name: '갈치', type: 'fish', market: '수산', price: '12,300원', change: '-3.2%', direction: 'down', note: '반입 증가' }
 ];
+
+let commodities = fallbackCommodities.map(item => ({ ...item }));
 
 const policies = [
   { title: '농식품 지원사업 공고, 신청기한 중심으로 재정리 필요', desc: '현장 독자가 바로 확인할 수 있도록 대상·기한·문의처 기준으로 요약합니다.' },
@@ -164,6 +173,8 @@ const nationalIndexCopy = document.querySelector('#national-index-copy');
 const nationalIndexGauge = document.querySelector('#national-index-gauge');
 const regionalChart = document.querySelector('#regional-chart');
 const nationalPriceTable = document.querySelector('#national-price-table');
+const priceSource = document.querySelector('#price-source');
+const priceTableNote = document.querySelector('#price-table-note');
 const marketRegionButtons = document.querySelectorAll('[data-region]');
 const regionDetailTitle = document.querySelector('#region-detail-title');
 const regionDetailSummary = document.querySelector('#region-detail-summary');
@@ -252,6 +263,13 @@ function renderBriefing() {
   briefSummary.textContent = briefing.summary;
   briefPoints.innerHTML = briefing.points.map(point => `<li>${point}</li>`).join('');
   gaugeFill.style.width = `${briefing.temperature}%`;
+
+  const marketTemp = document.querySelector('#market-temp');
+  if (marketTemp) {
+    if (briefing.temperature >= 75) marketTemp.textContent = '주의';
+    else if (briefing.temperature >= 55) marketTemp.textContent = '보통';
+    else marketTemp.textContent = '안정';
+  }
 }
 
 function renderCommodities(filter = 'all') {
@@ -266,6 +284,75 @@ function renderCommodities(filter = 'all') {
       </div>
     </article>
   `).join('');
+}
+
+function updateRegionalIndexCards(regionalIndexes) {
+  if (!regionalIndexes) return;
+
+  document.querySelectorAll('.market-region-card').forEach(card => {
+    const indexValue = regionalIndexes[card.dataset.region];
+    const label = card.querySelector('em');
+    if (label && indexValue) {
+      label.textContent = `지수 ${indexValue}`;
+    }
+  });
+}
+
+async function loadLiveMarketData() {
+  if (priceSource) {
+    priceSource.textContent = 'aT KAMIS 시세를 불러오는 중...';
+  }
+
+  try {
+    const response = await fetch('/.netlify/functions/kamis-prices');
+    const data = await response.json();
+
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || '시세 API 응답 오류');
+    }
+
+    nationalPriceIndex = data.nationalPriceIndex;
+    briefing = {
+      ...data.briefing,
+      points: [...data.briefing.points]
+    };
+    commodities.length = 0;
+    commodities.push(...data.commodities);
+
+    if (data.regionalIndexes) {
+      Object.entries(data.regionalIndexes).forEach(([key, index]) => {
+        if (regionalMarketInfo[key]) {
+          regionalMarketInfo[key].index = index;
+        }
+      });
+      updateRegionalIndexCards(data.regionalIndexes);
+    }
+
+    renderNationalPriceIndex();
+    renderBriefing();
+
+    const activeFilter = document.querySelector('.tab.active')?.dataset.filter || 'all';
+    renderCommodities(activeFilter);
+
+    const activeRegion = document.querySelector('[data-region].active')?.dataset.region || 'seoul';
+    renderRegionalMarketInfo(activeRegion);
+
+    const kamisSource = aiSources.find(source => source.name.includes('aT'));
+    if (kamisSource) kamisSource.status = '연동됨';
+    renderAiSources(0);
+
+    if (priceSource) {
+      const modeLabel = data.cached ? '캐시' : '실시간';
+      priceSource.textContent = `출처: aT 농산물유통정보(KAMIS) · ${modeLabel} 반영`;
+    }
+    if (priceTableNote) {
+      priceTableNote.textContent = '도매 기준 KAMIS';
+    }
+  } catch (error) {
+    if (priceSource) {
+      priceSource.textContent = '샘플 시세 표시 중 · Netlify 환경 변수(KAMIS_CERT_KEY, KAMIS_CERT_ID) 설정 후 재배포 필요';
+    }
+  }
 }
 
 function renderArticleList(target, list) {
@@ -520,6 +607,7 @@ renderArticleList(policyList, policies);
 renderArticleList(fieldList, fields);
 renderAiSources();
 renderAiQueue();
+loadLiveMarketData();
 
 if (sessionStorage.getItem('editor-authenticated') === 'true') {
   articleEngineSection.classList.add('is-unlocked');

@@ -130,6 +130,7 @@ main { padding: 0 5vw 60px; }
   line-height: .98; letter-spacing: -.07em;
 }
 .price-head p { margin: 0; color: var(--muted); font-size: 18px; line-height: 1.7; font-weight: 600; }
+.price-source { margin-top: 10px; font-size: 14px; color: var(--green); font-weight: 700; }
 .index-date {
   min-width: 170px; padding: 18px; border-radius: 22px;
   border: 1px solid var(--line); background: var(--panel);

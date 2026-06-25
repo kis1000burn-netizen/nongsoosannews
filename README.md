@@ -8,6 +8,7 @@
 - `newsroom.html`: 기사 전문을 모아 읽는 뉴스룸 페이지
 - `styles.css`: 전체 스타일
 - `app.js`: 시세표, AI 자료수집 시뮬레이션, 편집인 전용 기사화 도구
+- `netlify/functions/kamis-prices.mjs`: aT KAMIS Open API 연동 함수
 - `assets/`: 기사 썸네일 이미지
 - `netlify.toml`: Netlify 배포 설정
 
@@ -20,6 +21,37 @@
    - Build command: 비워둠
    - Publish directory: `.`
 5. 배포 후 Netlify에서 제공하는 도메인 또는 연결한 커스텀 도메인으로 접속합니다.
+
+## 매일 시세 자동 반영 (KAMIS API)
+
+홈 화면 시세표는 Netlify Function이 aT 농산물유통정보(KAMIS) Open API에서 최근 도매 시세를 가져와 자동으로 갱신합니다.
+
+### 1. KAMIS API 키 발급
+
+1. [KAMIS Open API 이용신청](https://www.kamis.or.kr/customer/reference/openapi_list.do)에서 사용 신청
+2. 승인 후 `인증키(p_cert_key)`와 `요청자 ID(p_cert_id)` 확인
+
+### 2. Netlify 환경 변수 등록
+
+Netlify 대시보드 → Site configuration → Environment variables:
+
+| 변수명 | 값 |
+| --- | --- |
+| `KAMIS_CERT_KEY` | 발급받은 인증키 |
+| `KAMIS_CERT_ID` | KAMIS 회원 아이디 |
+
+등록 후 **재배포**하면 홈 화면에 실시간 시세가 반영됩니다.
+
+### 3. 로컬 테스트
+
+```bash
+npm install -g netlify-cli
+cp .env.example .env
+# .env 파일에 KAMIS 키 입력
+netlify dev
+```
+
+환경 변수가 없거나 API 호출이 실패하면 샘플 시세가 표시됩니다.
 
 ## 관리자 기능
 
